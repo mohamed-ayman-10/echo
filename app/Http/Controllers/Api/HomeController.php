@@ -41,6 +41,14 @@ class HomeController extends Controller
         }
     }
 
+    public function getCar() {
+        $cars = Car::query()->where('user_id', auth('api')->user()->id)->get();
+        if (count($cars) < 1) {
+            return GeneralApi::returnNoContent();
+        }
+        return GeneralApi::returnData(200, 'Successfully', $cars);
+    }
+
     public function servicesByCarSizeId($car_size_id)
     {
         try {
