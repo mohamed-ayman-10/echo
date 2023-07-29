@@ -39,7 +39,7 @@ Route::middleware('jwt.verify', 'lang')->group(function () {
         Route::post('services', 'services');
         Route::post('services/{car_size_id}', 'servicesByCarSizeId');
 
-        // Get Car
+        // Get Cars
         Route::post('getCar', 'getCar');
         // Create Car
         Route::post('createCar', 'createCar');
