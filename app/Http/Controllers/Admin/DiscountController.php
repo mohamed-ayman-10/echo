@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\GeneralApi;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 
@@ -96,7 +97,13 @@ class DiscountController extends Controller
         }
     }
 
-    public function offers() {
+    public function offers()
+    {
         $offers = Offer::query()->with('service.material', 'service.images', 'service.includes')->get();
+        if (count($offers) == 0) {
+            return GeneralApi::returnNoContent();
+        } else {
+            return GeneralApi::returnData(200, 'success', $offers);
+        }
     }
 }

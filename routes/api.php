@@ -46,5 +46,6 @@ Route::middleware('jwt.verify', 'lang')->group(function () {
         // Delete Car
         Route::post('deleteCar', 'deleteCar');
     });
+
+    Route::post('offers', [DiscountController::class, 'offers']);
 });
-Route::post('offers', [DiscountController::class, 'offers']);
