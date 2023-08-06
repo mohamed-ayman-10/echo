@@ -19,6 +19,11 @@
                         </a>
                     </li>
                     <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.discount.index') }}">
+                            <i data-feather="dollar-sign"> </i><span>@lang('Offers')</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.users.index') }}">
                             <i data-feather="users"> </i><span>@lang('Users')</span>
                         </a>
