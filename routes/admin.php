@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CarModelController;
 use App\Http\Controllers\Admin\CarSizeController;
+use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\IncludeController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\ModelController;
@@ -78,5 +79,8 @@ Route::group([
             Route::get('/', 'index')->name('index');
             Route::post('/storeAndUpdate', 'storeAndUpdate')->name('storeAndUpdate');
         });
+
+        // Offers
+        Route::resource('discount', DiscountController::class);
     });
 });
