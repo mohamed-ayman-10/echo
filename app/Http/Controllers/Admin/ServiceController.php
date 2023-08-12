@@ -35,9 +35,8 @@ class ServiceController extends Controller
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
-                    $name = $image->getClientOriginalName();
                     $material = new Material();
-                    $material->image = $image->storeAs('materiales', $name, 'upload');
+                    $material->image = uploadImage('images/materials', $image);
                     $material->service_id = $service->id;
                     $material->save();
                 }
