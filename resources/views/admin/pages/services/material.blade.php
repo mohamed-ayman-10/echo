@@ -119,7 +119,7 @@
                             <div class="">
                                 <div class="form-group">
                                     <label class="form-label">@lang('Materials')</label>
-                                    <input type="file" name="images[]" class="form-control" multiple>
+                                    <input type="file" name="images[]" class="form-control" multiple accept="image/*">
                                 </div>
                             </div>
                         </div>

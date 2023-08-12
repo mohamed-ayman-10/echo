@@ -40,7 +40,8 @@ class MaterialController extends Controller
                 foreach ($request->file('images') as $image) {
                     $name = $image->getClientOriginalName();
                     $material = new Material();
-                    $material->image = $image->storeAs('images/materiales', $name, 'upload');
+//                    $material->image = $image->storeAs('images/materiales', $name, 'upload');
+                    $material->image = uploadImage('images/materials', $image);
                     $material->service_id = $request->service_id;
                     $material->save();
                 }
@@ -80,10 +81,11 @@ class MaterialController extends Controller
             ]);
 
             $image = $request->file('image');
-            $name = $image->getClientOriginalName();
             $material = Material::query()->findOrFail($id);
-            Storage::disk('upload')->delete($material->image);
-            $material->image = $image->storeAs('images/materiales', $name, 'upload');
+            if (file_exists($material->image)) {
+                unlink($material->image);
+            }
+            $material->image = uploadImage('images/materials', $image);
             $material->save();
 
             return back()->with('success', 'Update Successfully');
@@ -100,7 +102,9 @@ class MaterialController extends Controller
         try {
 
             $material = MAterial::query()->findOrFail($id);
-            Storage::disk('upload')->delete($material->image);
+            if (file_exists($material->image)) {
+                unlink($material->image);
+            }
             $material->delete();
 
             return back()->with('success', 'Delete Successfully');

@@ -214,7 +214,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">@lang('Materials')</label>
-                                    <input type="file" name="images[]" class="form-control" multiple>
+                                    <input type="file" name="images[]" class="form-control" multiple accept="image/*">
                                 </div>
                             </div>
                         </div>
