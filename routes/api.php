@@ -49,6 +49,8 @@ Route::middleware('jwt.verify', 'lang')->group(function () {
         Route::post('updateCar', 'updateCar');
         // Delete Car
         Route::post('deleteCar', 'deleteCar');
+        // Brand
+        Route::get('brand', 'brand');
     });
 
     Route::post('offers', [DiscountController::class, 'offers']);
