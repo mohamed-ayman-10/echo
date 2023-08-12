@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\GeneralApi;
+use App\Models\Brand;
 use App\Models\Car;
 use App\Models\CarSize;
 use App\Models\Service;
@@ -41,7 +42,8 @@ class HomeController extends Controller
         }
     }
 
-    public function getCar() {
+    public function getCar()
+    {
         $cars = Car::query()->where('user_id', auth('api')->user()->id)->get();
         if (count($cars) < 1) {
             return GeneralApi::returnNoContent();
@@ -71,10 +73,10 @@ class HomeController extends Controller
         try {
             $request->validate([
                 'car_size_id' => 'required',
-                'brand_id'    => 'required',
-                'model_id'    => 'required',
-                'plate'       => 'required',
-                'color'       => 'required',
+                'brand_id' => 'required',
+                'model_id' => 'required',
+                'plate' => 'required',
+                'color' => 'required',
             ]);
 
             $car = new Car();
@@ -101,12 +103,12 @@ class HomeController extends Controller
     {
         try {
             $request->validate([
-                'car_id'      => 'required',
+                'car_id' => 'required',
                 'car_size_id' => 'required',
-                'brand_id'    => 'required',
-                'model_id'    => 'required',
-                'plate'       => 'required',
-                'color'       => 'required',
+                'brand_id' => 'required',
+                'model_id' => 'required',
+                'plate' => 'required',
+                'color' => 'required',
             ]);
 
             // $car = Car::query()->where('id', $request->car_id)->where('user_id', auth('api')->user()->id)->get();
@@ -134,7 +136,7 @@ class HomeController extends Controller
     {
         try {
             $request->validate([
-                'car_id'      => 'required',
+                'car_id' => 'required',
             ]);
 
             $car = Car::query()->where('id', $request->car_id)->where('user_id', auth('api')->user()->id)->first();
@@ -142,6 +144,22 @@ class HomeController extends Controller
             $car->delete;
 
             return GeneralApi::returnData(201, 'Delete Successfully', $car);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage());
+        }
+    }
+
+    public function brand()
+    {
+        try {
+
+            $brands = Brand::with('models')->get();
+
+            if (\count($brands) > 0) {
+                return GeneralApi::returnData(200, 'success', $brands);
+            } else {
+                return GeneralApi::returnNoContent();
+            }
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage());
         }

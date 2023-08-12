@@ -17,4 +17,8 @@ class Brand extends Model
             return $this->title_en;
         }
     }
+
+    public function models(){
+        return $this->hasMany(CarModel::class);
+    }
 }
