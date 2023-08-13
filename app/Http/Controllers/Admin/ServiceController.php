@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\UploadImage;
 use App\Models\Material;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class ServiceController extends Controller
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
                     $material = new Material();
-                    $material->image = uploadImage('images/materials', $image);
+                    $material->image = UploadImage::uploadImage('images/materials', $image);
                     $material->service_id = $service->id;
                     $material->save();
                 }
