@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\UploadImage;
 use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +42,7 @@ class MaterialController extends Controller
                     $name = $image->getClientOriginalName();
                     $material = new Material();
 //                    $material->image = $image->storeAs('images/materiales', $name, 'upload');
-                    $material->image = uploadImage('images/materials', $image);
+                    $material->image = UploadImage::uploadImage('images/materials', $image);
                     $material->service_id = $request->service_id;
                     $material->save();
                 }
@@ -85,7 +86,7 @@ class MaterialController extends Controller
             if (file_exists($material->image)) {
                 unlink($material->image);
             }
-            $material->image = uploadImage('images/materials', $image);
+            $material->image = UploadImage::uploadImage('images/materials', $image);
             $material->save();
 
             return back()->with('success', 'Update Successfully');
