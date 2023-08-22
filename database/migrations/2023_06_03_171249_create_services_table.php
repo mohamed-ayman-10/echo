@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('duration');
             $table->string('week');
             $table->string('count');
+            $table->text('description_ar');
+            $table->text('description_en');
+            $table->text('image');
             $table->float('price');
             $table->foreignId('car_size_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->text('address')->nullable();
-            $table->text('address_link')->nullable();
-            $table->float('price');
+            $table->text('street');
+            $table->text('building');
+            $table->text('city');
             $table->dateTime('date');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('service_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();

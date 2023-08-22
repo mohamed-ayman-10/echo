@@ -24,14 +24,18 @@ class ServiceController extends Controller
             $request->validate([
                 'title_ar' => 'required|string|min:2',
                 'title_en' => 'required|string|min:2',
+                'description_ar' => 'required|string|min:2',
+                'description_en' => 'required|string|min:2',
                 'price' => 'required|string',
                 'car_size_id' => 'required',
                 'duration' => 'required',
                 'week' => 'required',
-                'count' => 'required'
+                'count' => 'required',
+                'image' => 'required'
             ]);
 
-            $data = $request->except('_token', 'images');
+            $data = $request->except('_token', 'images', 'image');
+            $data['image'] = UploadImage::uploadImage('images/services', $request->image);
             $service = Service::query()->create($data);
 
             if ($request->hasFile('images')) {
@@ -57,14 +61,27 @@ class ServiceController extends Controller
             $request->validate([
                 'title_ar' => 'required|string|min:2',
                 'title_en' => 'required|string|min:2',
+                'description_ar' => 'required|string|min:2',
+                'description_en' => 'required|string|min:2',
                 'price' => 'required|string',
                 'car_size_id' => 'required',
                 'id' => 'required',
             ]);
 
-            $data = $request->except('_token', 'id');
+            $data = $request->except('_token', 'id', 'image');
 
-            Service::query()->where('id', $request->id)->update($data);
+            $service = Service::query()->where('id', $request->id)->first();
+            if ($request->hasFile('image')) {
+                if (file_exists($service->image)) {
+                    unlink($service->image);
+                    $data['image'] = UploadImage::uploadImage('images/services', $request->image);
+                }
+            }
+
+            $service->update($data);
+
+
+
 
             return back()->with('success', __('Updated Successfully!'));
         } catch (\Exception $exception) {
@@ -74,7 +91,13 @@ class ServiceController extends Controller
 
     public function destroy($id)
     {
-        Service::destroy($id);
+        $service = Service::query()->findOrFail($id);
+        if (file_exists($service->image)) {
+            unlink($service->image);
+        }
+
+        $service->delete();
+
         return back()->with('success', __('Deleted Successfully!'));
     }
 }
