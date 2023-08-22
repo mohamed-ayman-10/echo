@@ -17,7 +17,8 @@ use App\Http\Controllers\Api\Front\AuthController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-// Callback
+// Payment
+Route::post('payment', [PaymentController::class, 'payment'])->middleware('jwt.verify');
 Route::get('callback', [PaymentController::class, 'callback']);
 
 // Auth
@@ -28,9 +29,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
 // Auth Jwt
 Route::middleware('jwt.verify', 'lang')->group(function () {
-
-    //Payment
-    Route::post('payment', [PaymentController::class, 'payment']);
 
     // Auth
     Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {

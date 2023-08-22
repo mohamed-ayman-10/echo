@@ -2,19 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PaymentRequest;
 use App\Models\Order;
 use App\Models\Service;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use App\Http\Requests\PaymentRequest;
+use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
-    public function payment(PaymentRequest $request)
+    public function payment(Request $request)
     {
 
-        return $request;
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'service_id' => 'required',
+            'street' => 'required',
+            'building' => 'required',
+            'city' => 'required',
+            'date' => 'required|date'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
 
         $service = Service::query()->where('id', $request->service_id)->first();
 
@@ -96,6 +111,7 @@ class PaymentController extends Controller
         $order->city = $request->city;
         $order->user_id = auth('api')->user()->id;
         $order->service_id = $request->service_id;
+        $order->date = $request->date;
         $order->save();
 
         return response()->json([
