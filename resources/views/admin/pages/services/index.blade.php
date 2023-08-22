@@ -39,7 +39,7 @@
                                                         <a href="{{ route('admin.services.material.show', $item->id) }}">
                                                             Material
                                                         </a>
-                                                        <a href="{{route('admin.services.include.show', $item->id)}}">
+                                                        <a href="{{ route('admin.services.include.show', $item->id) }}">
                                                             Include
                                                         </a>
                                                         <a href="#" data-bs-toggle="modal" data-original-title="test"
@@ -98,6 +98,14 @@
                                                             placeholder="@lang('Title In English')" required>
                                                     </div>
                                                     <div class="form-group">
+                                                        <label class="form-label">@lang('Description In Arabic')</label>
+                                                        <textarea name="description_ar" class="form-control" placeholder="@lang('Description In Arabic')" required>{{ old('description_ar', $item->description_ar) }}</textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label">@lang('Description In English')</label>
+                                                        <textarea name="description_en" class="form-control" placeholder="@lang('Description In English')" required>{{ old('description_en', $item->description_en) }}</textarea>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label class="form-label">@lang('Price')</label>
                                                         <input type="text" name="price" class="form-control"
                                                             value="{{ old('price', $item->price) }}"
@@ -112,8 +120,12 @@
                                                                     value="{{ $size->id }}">{{ $size->title() }}
                                                                 </option>
                                                             @endforeach
-
                                                         </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label">@lang('Image')</label>
+                                                        <input type="file" name="image" class="form-control"
+                                                            accept="image/*">
                                                     </div>
                                                     <input type="hidden" name="id" value="{{ $item->id }}">
                                                 </div>
@@ -182,6 +194,14 @@
                                     <input type="text" name="title_en" class="form-control"
                                         value="{{ old('title_en') }}" placeholder="@lang('Title In English')" required>
                                 </div>
+                                <div class="form-group">
+                                    <label class="form-label">@lang('Description In Arabic')</label>
+                                    <textarea name="description_ar" class="form-control" placeholder="@lang('Description In Arabic')" required>{{ old('description_ar') }}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">@lang('Description In English')</label>
+                                    <textarea name="description_en" class="form-control" placeholder="@lang('Description In English')" required>{{ old('description_en') }}</textarea>
+                                </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">@lang('Duration')</label>
                                     <input type="text" name="duration" class="form-control"
@@ -212,9 +232,14 @@
 
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">@lang('Image')</label>
+                                    <input type="file" name="image" class="form-control" required accept="image/*">
+                                </div>
+                                <div class="form-group">
                                     <label class="form-label">@lang('Materials')</label>
-                                    <input type="file" name="images[]" class="form-control" multiple accept="image/*">
+                                    <input type="file" name="images[]" class="form-control" multiple
+                                        accept="image/*">
                                 </div>
                             </div>
                         </div>

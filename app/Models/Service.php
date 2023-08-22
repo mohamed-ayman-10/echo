@@ -23,6 +23,13 @@ class Service extends Model
         elseif (app()->getLocale() == 'en')
             return $this->title_en;
     }
+    public function description()
+    {
+        if (app()->getLocale() == 'ar')
+            return $this->description_ar;
+        elseif (app()->getLocale() == 'en')
+            return $this->description_en;
+    }
 
     public function material()
     {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PaymentController;
 use App\Models\CarSize;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,14 @@ Route::get('test', function () {
     $carSizes = CarSize::query()->with('services.material', 'services.images', 'services.includes')->get();
     return $carSizes;
 });
+
+Route::get('test', function () {
+    return view('test');
+});
+
+Route::get('pay', function () {
+    return view('pay');
+});
+
+Route::post('payment', [PaymentController::class, 'payment']);
+Route::get('callback', [PaymentController::class, 'callback']);
